@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson Detail</title>
+    {% load static %}
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h1 class="card-title">{{ lesson.title }}</h1>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-text">Lesson {{ lesson.order }} of {{ lesson.course.title }}</h3>
+                        <p class="card-text">{{ lesson.content }}</p>
+
+                        <div class="navigation mt-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {% if previous_lesson %}
+                                    <a href="{% url 'lesson-detail' previous_lesson.id %}" class="btn btn-primary">&laquo; Previous</a>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 text-end">
+                                    {% if next_lesson %}
+                                    <a href="{% url 'lesson-detail' next_lesson.id %}" class="btn btn-primary">Next &raquo;</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

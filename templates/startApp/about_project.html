@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About the Project</title>
+    {% load static %}
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+    <header class="py-3 bg-primary text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-between align-items-center">
+                    <h1>About the Project</h1>
+                    <a href="{% url 'home_page' %}" class="btn btn-outline-light btn-sm me-2">Return to Home</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mt-5">
+        
+        <h3>This project was created by a student of VSB - Technical University of Ostrava</h3>
+        <ul>
+            <li>Username: KUZ0061</li>
+            <li>First name: Artem</li>
+            <li>Last name: Kuznetsov</li>
+            <li>Date of creation: 14.05.2024</li>
+        </ul>
+    </div>
+</body>
+</html>

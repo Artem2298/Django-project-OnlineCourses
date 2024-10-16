@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category.name }} - Category Details</title>
+    {% load static %}
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <header class="py-3 bg-primary text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Category: {{ category.name }}</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mt-5">
+        <p class="lead">{{ category.description }}</p>
+
+        <h2 class="mb-4">Courses in this Category</h2>
+        <div class="row">
+            {% for course in courses %}
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ course.title }}</h5>
+                        <p class="card-text">{{ course.description }}</p>
+                        <a href="{% url 'course-detail' course.id %}" class="btn btn-primary">View Course</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p>No courses available in this category.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>

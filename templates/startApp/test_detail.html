@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ test.title }}</title>
+    {% load static %}
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <header class="py-3 bg-primary text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>{{ test.title }}</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mt-5">
+        <h2 class="mb-4">Questions</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% for question in questions %}
+            <li class="list-group-item">
+                <p class="mb-2">{{ question.order }}. {{ question.text }}</p>
+                <textarea name="answer_{{ question.id }}" rows="4" class="form-control" placeholder="Enter your answer here"></textarea>
+            </li>
+            {% empty %}
+            <li class="list-group-item">No questions available.</li>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary mt-3">Submit Test</button>
+        </form>
+    </main>
+</body>
+</html>

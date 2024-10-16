@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Courses</title>
+    {% load static %}
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <header class="py-3 bg-primary text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-between align-items-center">
+                    <h1>Welcome to Our Online Courses</h1>
+                    <div>
+                        <a href="{% url 'about_project' %}" class="btn btn-outline-light btn-sm me-2"> Who made it?</a>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'profile' %}" class="btn btn-outline-light btn-sm me-2"> My profile</a>
+                        <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm">Logout</a>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm">Login</a>
+                        <a href="{% url 'register' %}" class="btn btn-outline-light btn-sm">Register</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mt-5">
+        <section class="mb-5">
+            <h2 class="mb-4">Explore Our Courses</h2>
+            <div class="row">
+                {% for category in categories %}
+                <div class="col-md-4 mb-3">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ category.name }}</h5>
+                            <p class="card-text">{{ category.description }}</p>
+                            <a href="{% url 'category-detail' category.id %}" class="btn btn-primary">View Category</a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <p>No categories available.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section>
+            <h2 class="mb-4">Popular Courses</h2>
+            <div class="row">
+                {% for course in courses %}
+                <div class="col-md-4 mb-3">
+                    <a href="{% url 'course-detail' course.id %}" class="card shadow-sm" style="text-decoration: none;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ course.title }}</h5>
+                            <p class="card-text">{{ course.description }}</p>
+                            <p class="card-text"><small class="text-muted">By {{ course.instructor.user.first_name }} {{ course.instructor.user.last_name }}</small></p>
+                        </div>
+                    </a>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <p>No courses available.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+</body>
+</html>

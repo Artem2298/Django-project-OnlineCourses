@@ -1,0 +1,93 @@
+<!-- templates/startApp/profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+</head>
+<body>
+
+    <div class="modal fade" id="notInstructorModal" tabindex="-1" aria-labelledby="notInstructorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notInstructorModalLabel">Oops, there's a problem</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    You are not a teacher
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header class="py-3 bg-primary text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-between align-items-center">
+                    <h1>User Profile</h1>
+                    <div>
+                        {% if user.is_authenticated %}
+                        <span class="me-2">Hello, {{ user.username }}!</span>
+                        <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm">Logout</a>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm">Login</a>
+                        <a href="{% url 'register' %}" class="btn btn-outline-light btn-sm">Register</a>
+                        {% endif %}
+                        <a href="{% url 'home_page' %}" class="btn btn-outline-light btn-sm">Home</a> <!-- Добавленная кнопка Home -->
+                        <a href="{% url 'edit_profile' %}" class="btn btn-outline-light btn-sm">Edit Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mt-5">
+        <section class="mb-5">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h2 class="card-title">{{ customer.user.username }}</h2>
+                            <p class="card-text">First Name: {{ customer.user.first_name }}</p>
+                            <p class="card-text">Last Name: {{ customer.user.last_name }}</p>
+                            <p class="card-text">Email: {{ customer.user.email }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 mb-3">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            {% if customer.is_instructor %}
+                            <h2 class="card-title">Teaching courses:</h2>
+                            <button class="btn btn-primary" onclick="window.location.href='{% url 'create_course' %}'">Add courses</button>
+                            <ul class="list-group list-group-flush">
+                                {% for course in instructor_courses %}
+                                <li class="list-group-item">
+                                    <a href="{% url 'course-detail' course.id %}">{{ course.title }}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% else %}
+                            <h2 class="card-title">Your courses:</h2>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#notInstructorModal">Add courses</button>
+                            <ul class="list-group list-group-flush">
+                                {% for enrollment in student_courses %}
+                                <li class="list-group-item">
+                                    <a href="{% url 'course-detail' enrollment.course.id %}">{{ enrollment.course.title }}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
